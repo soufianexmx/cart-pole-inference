@@ -1,0 +1,10 @@
+[package]
+name = "rl-proto"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+tch = "0.10.0"
+
+[dev-dependencies]
+torch-sys = "0.10.0"
