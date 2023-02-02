@@ -1,7 +1,7 @@
 # CartPole-v1 inference in Rust
 
 ## Requirements
-- Install Libtorch using ```brew install libtorch```
+- Install Libtorch v1.13.0
 - Env variables that need to be present:
 ```
 export LIBTORCH=~/pytorch-install
