@@ -1,13 +1,13 @@
 use serde::{Deserialize, Serialize};
 use tch::Tensor;
 
-#[derive(Deserialize, Serialize, Debug)]
+#[derive(Deserialize, Serialize, Clone, Debug)]
 struct CartPosition(f32);
 
-#[derive(Deserialize, Serialize, Debug)]
+#[derive(Deserialize, Serialize, Clone, Debug)]
 struct PoleAngle(f32);
 
-#[derive(Deserialize, Serialize, Debug)]
+#[derive(Deserialize, Serialize, Clone, Debug)]
 pub struct Observation {
     cart_position: CartPosition,
     cart_velocity: f32,
@@ -44,18 +44,29 @@ impl From<Observation> for Tensor {
     }
 }
 
+#[macro_use]
 #[cfg(test)]
 mod tests {
-
     use super::*;
+    use quickcheck::{quickcheck, Arbitrary, Gen};
     use tch::{Kind, Tensor};
 
-    #[test]
-    fn to_tensor_float() {
-        let observation = Observation::new(0.1, -0.5, 0.2, 1.5);
+    impl Arbitrary for Observation {
+        fn arbitrary(g: &mut Gen) -> Observation {
+            Observation::new(
+                f32::arbitrary(g),
+                f32::arbitrary(g),
+                f32::arbitrary(g),
+                f32::arbitrary(g),
+            )
+        }
+    }
 
-        let tensor = Tensor::from(observation);
+    quickcheck! {
+      fn prop_tensor_kind_float(observation: Observation) -> bool {
+          let tensor = Tensor::from(observation);
 
-        assert_eq!(tensor.kind(), Kind::Float)
+          tensor.kind() == Kind::Float
+      }
     }
 }
