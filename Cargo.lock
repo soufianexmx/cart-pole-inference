@@ -1048,6 +1048,7 @@ version = "0.1.0"
 dependencies = [
  "actix-web",
  "quickcheck",
+ "rand",
  "serde",
  "serde_json",
  "tch",

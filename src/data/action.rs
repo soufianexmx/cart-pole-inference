@@ -11,9 +11,9 @@ pub enum Action {
 impl Action {
     pub fn new(left: f64) -> Self {
         if left.round() == 1.0 {
-            Action::Right
-        } else {
             Action::Left
+        } else {
+            Action::Right
         }
     }
 }
@@ -26,19 +26,17 @@ impl From<Tensor> for Action {
 
 #[cfg(test)]
 mod tests {
-    use crate::action::Action;
-    use tch::{Device, Kind};
+    use super::*;
+    use tch::Tensor;
 
     #[test]
-    fn coercion() {
-        let tensor = tch::Tensor::rand(&[2], (Kind::Float, Device::Cpu));
+    fn to_action() {
+        // Given
+        let left_tensor = Tensor::from(&[1.0, 0.0][..]);
+        let right_tensor = Tensor::from(&[0.0, 1.0][..]);
 
-        let left = tensor.double_value(&[0]).round();
-
-        if left == 0.0 {
-            assert_eq!(Action::from(tensor), Action::Left)
-        } else {
-            assert_eq!(Action::from(tensor), Action::Right)
-        }
+        // Assert
+        assert_eq!(Action::from(left_tensor), Action::Left);
+        assert_eq!(Action::from(right_tensor), Action::Right);
     }
 }

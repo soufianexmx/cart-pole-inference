@@ -1,9 +1,11 @@
-use actix_web::{http::StatusCode, test, web, App};
+use actix_web::{http::StatusCode, web, App};
 use rl_proto::app::{handlers::predict, state::AppState};
 use rl_proto::data::observation::Observation;
 
 #[actix_web::test]
 async fn test_predict() {
+    use actix_web::test;
+
     // Given
     let mut model = tch::CModule::load("CartPole-v1.pt").expect("Couldn't load module");
     model.set_eval();
