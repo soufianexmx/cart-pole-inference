@@ -1,5 +1,5 @@
 use actix_web::{http::StatusCode, web, App};
-use rl_proto::app::{handlers::predict, state::AppState};
+use rl_proto::app::{config::AppConfig, handlers::predict};
 
 #[actix_web::test]
 async fn test_predict() {
@@ -9,7 +9,7 @@ async fn test_predict() {
     let mut model = tch::CModule::load("CartPole-v1.pt").expect("Couldn't load module");
     model.set_eval();
 
-    let web_data = web::Data::new(AppState::new(model));
+    let web_data = web::Data::new(AppConfig::new(model));
     let app = test::init_service(App::new().app_data(web_data.clone()).service(predict)).await;
 
     // When

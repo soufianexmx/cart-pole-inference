@@ -1,4 +1,4 @@
-use super::AppState;
+use super::AppConfig;
 use crate::action::Action;
 use crate::observation::Observation;
 use actix_web::{get, post, web, HttpResponse, Responder, Result};
@@ -12,7 +12,7 @@ pub async fn health() -> impl Responder {
 #[post("/predict")]
 pub async fn predict(
     observation: web::Json<Observation>,
-    state: web::Data<AppState>,
+    state: web::Data<AppConfig>,
 ) -> Result<impl Responder> {
     let action = Action::from(state.model().forward(&observation.0.into()));
 

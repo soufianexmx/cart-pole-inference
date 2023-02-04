@@ -1,10 +1,10 @@
 use tch::CModule;
 
-pub struct AppState {
+pub struct AppConfig {
     model: CModule,
 }
 
-impl AppState {
+impl AppConfig {
     pub fn new(model: CModule) -> Self {
         Self { model }
     }

@@ -1,10 +1,10 @@
+pub mod config;
 pub mod handlers;
-pub mod state;
 
 use actix_web::dev::Server;
 use actix_web::{web, App, HttpServer};
+use config::AppConfig;
 use handlers::*;
-use state::AppState;
 
 pub fn run(model: tch::CModule) -> Result<Server, std::io::Error> {
     // metrics
@@ -14,7 +14,7 @@ pub fn run(model: tch::CModule) -> Result<Server, std::io::Error> {
         .unwrap();
 
     // state
-    let web_data = web::Data::new(AppState::new(model));
+    let web_data = web::Data::new(AppConfig::new(model));
 
     // server
     let server = HttpServer::new(move || {
