@@ -1,4 +1,5 @@
 ### Uncompleted
+- [ ] configure host and port
 - [ ] docker
 - [ ] errors
 - [ ] metrics
