@@ -9,3 +9,11 @@ export LD_LIBRARY_PATH=${LIBTORCH}/lib:$LD_LIBRARY_PATH
 export LIBTORCH_INCLUDE=~/pytorch-install
 export LIBTORCH_LIB=~/pytorch-install
 ```
+
+## Getting Started
+
+### Run server
+To run the server, please use ```cargo run --bin rl-proto```
+
+### Load test
+To run the load test, make sure server is already running and please use ```cargo run --bin load -- --host http://127.0.0.1:8080```
