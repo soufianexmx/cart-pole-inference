@@ -9,9 +9,14 @@ use state::AppState;
 pub fn run(model: tch::CModule) -> Result<Server, std::io::Error> {
     let web_data = web::Data::new(AppState::new(model));
 
-    let server = HttpServer::new(move || App::new().app_data(web_data.clone()).service(predict))
-        .bind(("127.0.0.1", 8080))?
-        .run();
+    let server = HttpServer::new(move || {
+        App::new()
+            .app_data(web_data.clone())
+            .service(health)
+            .service(predict)
+    })
+    .bind(("127.0.0.1", 8080))?
+    .run();
 
     Ok(server)
 }

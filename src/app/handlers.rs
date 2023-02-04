@@ -1,8 +1,13 @@
 use super::AppState;
 use crate::action::Action;
 use crate::observation::Observation;
-use actix_web::{post, web, Responder, Result};
+use actix_web::{get, post, web, HttpResponse, Responder, Result};
 use tch::nn::Module;
+
+#[get("/")]
+pub async fn health() -> impl Responder {
+    HttpResponse::Ok()
+}
 
 #[post("/predict")]
 pub async fn predict(

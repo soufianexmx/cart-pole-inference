@@ -3,11 +3,17 @@ name = "rl-proto"
 version = "0.1.0"
 edition = "2021"
 
+[[bin]]
+name = "load"
+path = "load/main.rs"
+
 [dependencies]
 tch = "0.10.0"
 actix-web = "4.3.0"
 serde = { version = "1.0.152", features = ["derive"] }
 serde_json = "1.0.91"
+goose = "0.17.0"
+tokio = "1.25.0"
 
 [dev-dependencies]
 torch-sys = "0.10.0"
