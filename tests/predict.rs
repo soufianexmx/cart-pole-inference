@@ -1,6 +1,5 @@
 use actix_web::{http::StatusCode, web, App};
 use rl_proto::app::{handlers::predict, state::AppState};
-use rl_proto::data::observation::Observation;
 
 #[actix_web::test]
 async fn test_predict() {
@@ -14,7 +13,9 @@ async fn test_predict() {
     let app = test::init_service(App::new().app_data(web_data.clone()).service(predict)).await;
 
     // When
-    let observation = Observation::new(2.0, 20.0, 0.1, 10.0);
+    let observation: serde_json::Value = serde_json::from_str(
+        r#"{ "cart_position": 0.1, "cart_velocity": 50.0, "pole_angle": 0.13, "pole_angular_velocity": 0.1}"#,
+    ).expect("Couldn't parse observation json");
 
     let req = test::TestRequest::post()
         .uri("/predict")

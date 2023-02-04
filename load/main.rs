@@ -1,9 +1,11 @@
 use goose::prelude::*;
 
 async fn predict(user: &mut GooseUser) -> TransactionResult {
-    let json = r#"{ "cart_position": 0.1, "cart_velocity": 50.0, "pole_angle": 0.13, "pole_angular_velocity": 0.1}"#;
+    let observation: serde_json::Value = serde_json::from_str(
+        r#"{ "cart_position": 0.1, "cart_velocity": 50.0, "pole_angle": 0.13, "pole_angular_velocity": 0.1}"#,
+    ).expect("Couldn't parse observation json");
 
-    let _goose_metrics = user.post("/predict", json).await?;
+    let _goose_metrics = user.post_json("/predict", &observation).await?;
 
     Ok(())
 }
