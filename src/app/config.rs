@@ -8,6 +8,7 @@ pub struct AppConfig {
     model_path: String,
     base_url: String,
     port: u16,
+    log_level: String,
 }
 
 impl AppConfig {
@@ -29,5 +30,9 @@ impl AppConfig {
 
     pub fn port(&self) -> u16 {
         self.port
+    }
+
+    pub fn log_level(&self) -> &str {
+        &self.log_level
     }
 }

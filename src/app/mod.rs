@@ -3,6 +3,7 @@ pub mod env;
 pub mod handlers;
 
 use actix_web::dev::Server;
+use actix_web::middleware::Logger;
 use actix_web::{web, App, HttpServer};
 use handlers::*;
 use std::net::TcpListener;
@@ -21,6 +22,7 @@ pub fn run(listener: TcpListener, model: tch::CModule) -> Result<Server, std::io
     let server = HttpServer::new(move || {
         App::new()
             .app_data(web_data.clone())
+            .wrap(Logger::default())
             .wrap(prometheus.clone())
             .service(health)
             .service(predict)

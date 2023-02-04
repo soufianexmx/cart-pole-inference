@@ -1,3 +1,4 @@
 base_url = "127.0.0.1"
 port = "8080"
 model_path = "CartPole-v1.pt"
+log_level = "info"

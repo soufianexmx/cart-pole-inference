@@ -8,5 +8,7 @@
   - [ ] collect metrics
   - [ ] visualize
 - [ ] logs
+  - [ ] add structured logging
+  - [ ] add correlation_id
 - [ ] add paths and module as a config
 - [ ] add test to validate request body format
