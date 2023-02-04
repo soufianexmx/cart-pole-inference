@@ -1,12 +1,13 @@
 pub mod config;
+pub mod env;
 pub mod handlers;
 
 use actix_web::dev::Server;
 use actix_web::{web, App, HttpServer};
-use config::AppConfig;
 use handlers::*;
+use std::net::TcpListener;
 
-pub fn run(model: tch::CModule) -> Result<Server, std::io::Error> {
+pub fn run(listener: TcpListener, model: tch::CModule) -> Result<Server, std::io::Error> {
     // metrics
     let prometheus = actix_web_prom::PrometheusMetricsBuilder::new("api")
         .endpoint("/metrics")
@@ -14,7 +15,7 @@ pub fn run(model: tch::CModule) -> Result<Server, std::io::Error> {
         .unwrap();
 
     // state
-    let web_data = web::Data::new(AppConfig::new(model));
+    let web_data = web::Data::new(env::AppEnv::new(model));
 
     // server
     let server = HttpServer::new(move || {
@@ -24,7 +25,7 @@ pub fn run(model: tch::CModule) -> Result<Server, std::io::Error> {
             .service(health)
             .service(predict)
     })
-    .bind(("127.0.0.1", 8080))?
+    .listen(listener)?
     .run();
 
     Ok(server)

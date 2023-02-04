@@ -1,7 +1,8 @@
 ### Uncompleted
-- [ ] configure host and port
+- [ ] use whole service in integration tests
+- [X] configure host and port
 - [ ] docker
-- [ ] errors
+- [ ] exceptions
 - [ ] metrics
   - [X] expose basic metrics
   - [ ] collect metrics

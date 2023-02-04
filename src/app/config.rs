@@ -1,15 +1,33 @@
-use tch::CModule;
+use config::{Config, ConfigError, File};
+use serde::Deserialize;
 
+const CONFIG_PATH: &str = "config/default.toml";
+
+#[derive(Deserialize)]
 pub struct AppConfig {
-    model: CModule,
+    model_path: String,
+    base_url: String,
+    port: u16,
 }
 
 impl AppConfig {
-    pub fn new(model: CModule) -> Self {
-        Self { model }
+    pub fn new() -> Result<Self, ConfigError> {
+        let s = Config::builder()
+            .add_source(File::with_name(CONFIG_PATH))
+            .build()?;
+
+        s.try_deserialize()
     }
 
-    pub fn model(&self) -> &CModule {
-        &self.model
+    pub fn model_path(&self) -> &str {
+        &self.model_path
+    }
+
+    pub fn base_url(&self) -> &str {
+        &self.base_url
+    }
+
+    pub fn port(&self) -> u16 {
+        self.port
     }
 }

@@ -1,9 +1,19 @@
+use lazy_static::lazy_static;
 use rl_proto::app;
+use rl_proto::app::config::AppConfig;
+use std::net::TcpListener;
+
+lazy_static! {
+    static ref CONFIG: AppConfig = AppConfig::new().expect("config can't be loaded!!!");
+}
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-    let mut model = tch::CModule::load("CartPole-v1.pt").expect("Couldn't load module");
+    let listener = TcpListener::bind((CONFIG.base_url(), CONFIG.port()))
+        .expect("Failed to bind random port!!!");
+
+    let mut model = tch::CModule::load(CONFIG.model_path()).expect("Couldn't load module!!!");
     model.set_eval();
 
-    app::run(model)?.await
+    app::run(listener, model)?.await
 }
