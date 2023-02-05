@@ -9,13 +9,20 @@ lazy_static! {
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-    env_logger::Builder::from_env(env_logger::Env::default().default_filter_or(CONFIG.log_level()))
-        .init();
+    app::subscriber::init_subscriber(CONFIG.log_level());
 
+    tracing::info!(
+        "setting up listener {}:{}...",
+        CONFIG.base_url(),
+        CONFIG.port()
+    );
     let listener = TcpListener::bind((CONFIG.base_url(), CONFIG.port()))
-        .expect("Failed to bind random port!!!");
+        .expect("failed to bind random port!!!");
 
+    tracing::info!("loading RL model {}...", CONFIG.model_path());
     let mut model = tch::CModule::load(CONFIG.model_path()).expect("Couldn't load module!!!");
+
+    tracing::info!("set model to evaluation mode for inference...");
     model.set_eval();
 
     app::run(listener, model)?.await
