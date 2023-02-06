@@ -12,9 +12,9 @@ pub async fn health() -> impl Responder {
 #[post("/predict")]
 pub async fn predict(
     observation: web::Json<Observation>,
-    state: web::Data<AppEnv>,
+    env: web::Data<AppEnv>,
 ) -> Result<impl Responder> {
-    let action = Action::from(state.model().forward(&observation.0.into()));
+    let action = Action::from(env.model().forward(&observation.0.into()));
 
     Ok(web::Json(action))
 }
