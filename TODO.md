@@ -1,6 +1,6 @@
-### Uncompleted
+## TODO LIST
 - [ ] run integration tests in parallel
-- [ ] add config for tests runtime
+- [X] add config for tests runtime
 - [X] use whole service in integration tests
 - [X] configure host and port
 - [ ] docker
