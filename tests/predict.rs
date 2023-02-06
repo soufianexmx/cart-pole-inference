@@ -1,13 +1,7 @@
 mod fixtures;
 
-use actix_web::{http::StatusCode, web, App};
-use rl_proto::app;
-use rl_proto::app::{env::AppEnv, handlers::predict};
-
-#[actix_web::test]
+#[tokio::test]
 async fn test_predict() {
-    use actix_web::test;
-
     // Given
     fixtures::spawn_app();
 
@@ -24,7 +18,7 @@ async fn test_predict() {
         .json(&observation)
         .send()
         .await
-        .expect("couldnt't send response!!!");
+        .expect("couldnt't send request!!!");
 
-    assert_eq!(resp.status(), StatusCode::OK)
+    assert_eq!(resp.status(), actix_web::http::StatusCode::OK)
 }

@@ -1,7 +1,7 @@
 mod fixtures;
 
 #[tokio::test]
-async fn test_health() {
+async fn test_metrics() {
     // Given
     fixtures::spawn_app();
 
@@ -9,7 +9,7 @@ async fn test_health() {
 
     // Assert
     let resp = client
-        .get(format!("{}", fixtures::listen_addr()))
+        .get(format!("{}/metrics", fixtures::listen_addr()))
         .send()
         .await
         .expect("couldnt't send request!!!");
