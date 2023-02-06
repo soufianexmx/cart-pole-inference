@@ -9,7 +9,9 @@
   - [X] expose basic metrics
   - [X] collect metrics
   - [X] visualize
-  - [ ] add cpu, response time
+  - [X] add response time
+  - [ ] add system metrics
+  - [ ] add error rate
 - [ ] logs
   - [X] add structured logging
   - [X] add correlation_id
