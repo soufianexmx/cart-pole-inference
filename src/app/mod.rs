@@ -37,7 +37,7 @@ pub fn run() -> Result<(Server, Data<AppEnv>), std::io::Error> {
     let cloned_env = env.clone();
 
     // metrics
-    let prometheus = actix_web_prom::PrometheusMetricsBuilder::new("api")
+    let prometheus = actix_web_prom::PrometheusMetricsBuilder::new("")
         .endpoint("/metrics")
         .build()
         .unwrap();

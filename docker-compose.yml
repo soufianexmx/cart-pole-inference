@@ -1,0 +1,16 @@
+services:
+  prometheus:
+    image: prom/prometheus:v2.42.0
+    volumes:
+      - ~/rl-proto/monitor/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - 9090:9090
+    restart: always
+
+  grafana:
+    image: grafana/grafana:9.3.6
+    volumes:
+      - ~/rl-proto/monitor/grafana/provisioning:/etc/grafana/provisioning
+    ports:
+      - 3000:3000
+    restart: always

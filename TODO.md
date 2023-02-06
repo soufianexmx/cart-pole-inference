@@ -7,8 +7,9 @@
 - [ ] exceptions
 - [ ] metrics
   - [X] expose basic metrics
-  - [ ] collect metrics
-  - [ ] visualize
+  - [X] collect metrics
+  - [X] visualize
+  - [ ] add cpu, response time
 - [ ] logs
   - [X] add structured logging
   - [X] add correlation_id

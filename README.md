@@ -31,3 +31,7 @@ curl -XPOST http://127.0.0.1:8080/predict \
   -H "Content-Type: application/json" \
   -d '{ "cart_position": 0.1, "cart_velocity": 50.0, "pole_angle": 0.13, "pole_angular_velocity": 0.1}'
 ```
+
+## Metrics
+
+To be able to collect and visualize metrics please use ```docker compose up```. Grafana can be accessed from http://127.0.0.1:3000. 
