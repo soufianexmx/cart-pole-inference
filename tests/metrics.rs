@@ -3,13 +3,13 @@ mod fixtures;
 #[tokio::test]
 async fn test_metrics() {
     // Given
-    fixtures::spawn_app();
+    let env = fixtures::spawn_app();
 
     let client = reqwest::Client::new();
 
     // Assert
     let resp = client
-        .get(format!("{}/metrics", fixtures::listen_addr()))
+        .get(format!("{}/metrics", env.listen_addr()))
         .send()
         .await
         .expect("couldnt't send request!!!");

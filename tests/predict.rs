@@ -3,7 +3,7 @@ mod fixtures;
 #[tokio::test]
 async fn test_predict() {
     // Given
-    fixtures::spawn_app();
+    let env = fixtures::spawn_app();
 
     let client = reqwest::Client::new();
 
@@ -14,7 +14,7 @@ async fn test_predict() {
 
     // Assert
     let resp = client
-        .post(format!("{}/predict", fixtures::listen_addr()))
+        .post(format!("{}/predict", env.listen_addr()))
         .json(&observation)
         .send()
         .await

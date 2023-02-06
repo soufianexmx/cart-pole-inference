@@ -12,12 +12,16 @@ export LIBTORCH_LIB=~/pytorch-install
 
 ## Getting Started
 
+logs are better seen with [bunyan](https://github.com/LukeMathWalker/bunyan), and the log level can be controlled by setting RUST_LOG (default is info).
+
 ### Run server
-To run the server, please use ```cargo run --bin rl-proto```
+To run the server, please use ```cargo run --bin rl-proto | bunyan```
 
 ### Load test
 To run the load test, make sure server is already running and please use ```cargo run --bin load -- --host http://127.0.0.1:8080```
 
+### Run integration/unit test
+To run the tests, please use ```RUST_ENV=test cargo test | bunyan```
 
 ## API
 

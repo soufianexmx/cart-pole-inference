@@ -1,11 +1,12 @@
 pub mod config;
 pub mod env;
-pub mod handlers;
+mod handlers;
 pub mod subscriber;
 
 use crate::app::config::AppConfig;
+use crate::app::env::AppEnv;
 use actix_web::dev::Server;
-use actix_web::{web, App, HttpServer};
+use actix_web::{web::Data, App, HttpServer};
 use handlers::*;
 use lazy_static::lazy_static;
 use std::net::TcpListener;
@@ -14,14 +15,16 @@ lazy_static! {
     pub static ref CONFIG: AppConfig = AppConfig::new().expect("config can't be loaded!!!");
 }
 
-pub fn run() -> Result<Server, std::io::Error> {
+pub fn run() -> Result<(Server, Data<AppEnv>), std::io::Error> {
     tracing::info!(
         "setting up listener {}:{}...",
-        CONFIG.base_url(),
+        CONFIG.address(),
         CONFIG.port()
     );
-    let listener = TcpListener::bind((CONFIG.base_url(), CONFIG.port()))
+    let listener = TcpListener::bind((CONFIG.address(), CONFIG.port()))
         .expect("failed to bind random port!!!");
+
+    let port = listener.local_addr().unwrap().port();
 
     tracing::info!("loading RL model {}...", CONFIG.model_path());
     let mut model = tch::CModule::load(CONFIG.model_path()).expect("Couldn't load module!!!");
@@ -29,19 +32,20 @@ pub fn run() -> Result<Server, std::io::Error> {
     tracing::info!("set model to evaluation mode for inference...");
     model.set_eval();
 
+    //env
+    let env = Data::new(AppEnv::new(model, CONFIG.address().to_string(), port));
+    let cloned_env = env.clone();
+
     // metrics
     let prometheus = actix_web_prom::PrometheusMetricsBuilder::new("api")
         .endpoint("/metrics")
         .build()
         .unwrap();
 
-    // state
-    let web_data = web::Data::new(env::AppEnv::new(model));
-
     tracing::info!("staring sever...");
     let server = HttpServer::new(move || {
         App::new()
-            .app_data(web_data.clone())
+            .app_data(env.clone())
             .wrap(tracing_actix_web::TracingLogger::default())
             .wrap(prometheus.clone())
             .service(health)
@@ -50,5 +54,5 @@ pub fn run() -> Result<Server, std::io::Error> {
     .listen(listener)?
     .run();
 
-    Ok(server)
+    Ok((server, cloned_env))
 }

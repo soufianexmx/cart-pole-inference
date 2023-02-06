@@ -4,5 +4,7 @@ use rl_proto::app;
 async fn main() -> std::io::Result<()> {
     app::subscriber::init_subscriber();
 
-    app::run()?.await
+    let (sever, _) = app::run()?;
+
+    sever.await
 }
