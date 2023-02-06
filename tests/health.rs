@@ -1,3 +1,4 @@
+mod fixtures;
 use actix_web::{http::StatusCode, App};
 use rl_proto::app::handlers::health;
 
@@ -6,12 +7,16 @@ async fn test_health() {
     use actix_web::test;
 
     // Given
-    let app = test::init_service(App::new().service(health)).await;
+    fixtures::spawn_app();
 
-    // When
-    let req = test::TestRequest::get().uri("/").to_request();
+    let client = reqwest::Client::new();
 
     // Assert
-    let resp = test::call_service(&app, req).await;
+    let resp = client
+        .get(format!("{}", fixtures::listen_addr()))
+        .send()
+        .await
+        .expect("couldnt't send response!!!");
+
     assert_eq!(resp.status(), StatusCode::OK)
 }

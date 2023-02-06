@@ -1888,6 +1888,7 @@ dependencies = [
  "goose",
  "lazy_static",
  "quickcheck",
+ "reqwest",
  "serde",
  "serde_json",
  "tch",

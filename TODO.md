@@ -1,5 +1,7 @@
 ### Uncompleted
-- [ ] use whole service in integration tests
+- [ ] run integration tests in parallel
+- [ ] add config for tests runtime
+- [X] use whole service in integration tests
 - [X] configure host and port
 - [ ] docker
 - [ ] exceptions
@@ -8,7 +10,7 @@
   - [ ] collect metrics
   - [ ] visualize
 - [ ] logs
-  - [ ] add structured logging
-  - [ ] add correlation_id
-- [ ] add paths and module as a config
+  - [X] add structured logging
+  - [X] add correlation_id
+- [X] add paths and module as a config
 - [ ] add test to validate request body format
