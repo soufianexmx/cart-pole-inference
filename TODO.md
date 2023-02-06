@@ -1,5 +1,5 @@
 ## TODO LIST
-- [ ] run integration tests in parallel
+- [X] run integration tests in parallel
 - [X] add config for tests runtime
 - [X] use whole service in integration tests
 - [X] configure host and port
