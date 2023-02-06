@@ -1,6 +1,6 @@
 use super::env::AppEnv;
-use crate::action::Action;
-use crate::observation::Observation;
+use crate::data::action::Action;
+use crate::data::observation::Observation;
 use actix_web::{get, post, web, HttpResponse, Responder, Result};
 use tch::nn::Module;
 

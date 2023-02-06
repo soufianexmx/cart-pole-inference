@@ -1,4 +1,4 @@
-pub mod config;
+mod config;
 pub mod env;
 mod handlers;
 pub mod subscriber;
