@@ -17,11 +17,15 @@ logs are better seen with [bunyan](https://github.com/LukeMathWalker/bunyan), an
 ### Run server
 To run the server, please use ```cargo run --bin rl-proto | bunyan```
 
+<img width="1660" alt="Screenshot 2023-02-07 at 17 12 46" src="https://user-images.githubusercontent.com/123186384/217300175-ca96a343-b6f5-418f-b6fd-3feedeb02bb0.png">
+
 ### Load test
-To run the load test, make sure server is already running and please use ```cargo run --bin load -- --host http://127.0.0.1:8080```
+For load tests, [Goose](https://docs.rs/goose/latest/goose/). To fire the load, make sure server is already running and please use ```cargo run --bin load -- --host http://127.0.0.1:8080```. You can stop the load with ctrl + c, the output will log some statistics about the average response time, number of requests, number of failing requests; all for the predict endpoint.
+
+https://user-images.githubusercontent.com/123186384/217301060-a7de0c45-b53e-4bb0-b9d4-34e633035984.mov
 
 ### Run integration/unit test
-To run the tests, please use ```RUST_ENV=test cargo test | bunyan```
+To run the tests, please use ```RUST_ENV=test cargo test | bunyan```. By declaring RUST_ENV=test, you will use the test config file and with that a different port for each integration test.
 
 ## API
 
