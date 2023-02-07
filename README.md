@@ -25,7 +25,7 @@ For load tests, [Goose](https://docs.rs/goose/latest/goose/). To fire the load, 
 https://user-images.githubusercontent.com/123186384/217301060-a7de0c45-b53e-4bb0-b9d4-34e633035984.mov
 
 ### Run integration/unit test
-To run the tests, please use ```RUST_ENV=test cargo test | bunyan```. By declaring RUST_ENV=test, you will use the test config file and with that a different port for each integration test.
+To run the tests, please use ```RUN_ENV=test cargo test | bunyan```. By declaring RUST_ENV=test, you will use the test config file and with that a different port for each integration test.
 
 ## API
 
@@ -35,7 +35,11 @@ curl -XPOST http://127.0.0.1:8080/predict \
   -H "Content-Type: application/json" \
   -d '{ "cart_position": 0.1, "cart_velocity": 50.0, "pole_angle": 0.13, "pole_angular_velocity": 0.1}'
 ```
+The response should be in the json form ```{"action":"Right"}```.
 
 ## Metrics
 
 To be able to collect and visualize metrics please use ```docker compose up```. Grafana can be accessed from http://127.0.0.1:3000. 
+
+<img width="1167" alt="image" src="https://user-images.githubusercontent.com/123186384/217311400-d4f88554-14ae-48de-9801-f888043d75e8.png">
+
