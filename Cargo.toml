@@ -8,7 +8,7 @@ name = "load"
 path = "load/main.rs"
 
 [dependencies]
-tch = "0.10.0"
+ tch = "0.10.1"
 actix-web = "4.3.0"
 serde = { version = "1.0.152", features = ["derive"] }
 serde_json = "1.0.91"

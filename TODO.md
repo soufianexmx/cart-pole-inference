@@ -1,4 +1,5 @@
 ## TODO LIST
+- [ ] validate cart position and pole angle
 - [X] run integration tests in parallel
 - [X] add config for tests runtime
 - [X] use whole service in integration tests
